@@ -139,6 +139,24 @@ UNFOLD = {
                 ],
             },
             {
+                "title": "Products",
+                "collapsible": True,
+                "items": [
+                    {
+                        "title": "Products",
+                        "icon": "inventory_2",
+                        "link": "/admin/products/product/",
+                        "permission": lambda request: request.user.has_perm("products.view_product"),
+                    },
+                    {
+                        "title": "Categories",
+                        "icon": "category",
+                        "link": "/admin/products/category/",
+                        "permission": lambda request: request.user.has_perm("products.view_category"),
+                    },
+                ],
+            },
+            {
                 "title": "Social Accounts",
                 "collapsible": True,
                 "collapse": True,
