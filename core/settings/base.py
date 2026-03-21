@@ -13,6 +13,9 @@ ALLOWED_HOSTS = []
 
 # Application definition
 BASE_APPS = [
+    'unfold',
+    'unfold.contrib.filters',
+    'unfold.contrib.inlines',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -34,14 +37,11 @@ THIRD_APPS=[
     'allauth.account',
     'allauth.socialaccount',
     'simple_history',
-    'unfold',
-    'unfold.contrib.filters',
-    'unfold.contrib.inlines',
     'django_htmx',
     'tailwind',
 ]
 
-INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
+INSTALLED_APPS = BASE_APPS + THIRD_APPS + LOCAL_APPS 
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -106,7 +106,86 @@ ACCOUNT_SIGNUP_FIELDS = ['email*']
 ACCOUNT_LOGIN_METHODS = {'email'}
 AUTH_USER_MODEL = 'users.User'
 
+ACCOUNT_FORMS = {
+    "signup": "users.forms.CustomSignupForm",
+}
 
+
+# Configuración de Unfold
+# config/settings.py
+
+# config/settings.py
+
+UNFOLD = {
+    "SITE_TITLE": "ERP Fenix Soft",
+    "SITE_HEADER": "Dashboard",
+    "SITE_URL": "/",
+    "SHOW_HISTORY": True,
+    "SHOW_VIEW_ON_SITE": False,
+    # "THEME": "dark",
+    
+    "SIDEBAR": {
+        "show_search": True,
+        "show_all_applications": False,
+        "navigation": [
+            {
+                "title": "Users",
+                "collapsible": True,
+                "items": [
+                    {
+                        "title": "Users",
+                        "icon": "person",
+                        "link": "/admin/users/user/",
+                        "permission": lambda request: request.user.has_perm("users.view_user"),
+                    },
+                ],
+            },
+            {
+                "title": "Social Accounts",
+                "collapsible": True,
+                "collapse": True,
+                "items": [
+                    {
+                        "title": "Social accounts",
+                        "icon": "share",
+                        "link": "/admin/socialaccount/socialaccount/",
+                        "permission": lambda request: request.user.has_perm("socialaccount.view_socialaccount"),
+                    },
+                    {
+                        "title": "Social applications",
+                        "icon": "api",
+                        "link": "/admin/socialaccount/socialapp/",
+                        "permission": lambda request: request.user.has_perm("socialaccount.view_socialapp"),
+                    },
+                    {
+                        "title": "Social application tokens",
+                        "icon": "vpn_key",
+                        "link": "/admin/socialaccount/socialtoken/",
+                        "permission": lambda request: request.user.has_perm("socialaccount.view_socialtoken"),
+                    },
+                ],
+            },
+            {
+                "title": "Authentication and Authorization",
+                "collapsible": True,
+                "items": [
+                    {
+                        "title": "Groups",
+                        "icon": "group",
+                        "link": "/admin/auth/group/",
+                        "permission": lambda request: request.user.has_perm("auth.view_group"),
+                    },
+                ],
+            },
+        ],
+    },
+    
+    # Evitar errores de traducción
+    "TITLES": {
+        "login": "login",
+        "logout": "logout",
+    },
+}
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'
