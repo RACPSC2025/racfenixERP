@@ -1,4 +1,5 @@
 from pathlib import Path
+from django.templatetags.static import static
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -11,11 +12,14 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# ------------------------------------------
 # Application definition
+# ------------------------------------------
 BASE_APPS = [
     'unfold',
     'unfold.contrib.filters',
     'unfold.contrib.inlines',
+    'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,11 +42,13 @@ THIRD_APPS=[
     'allauth.socialaccount',
     'simple_history',
     'django_htmx',
-    'tailwind',
 ]
 
 INSTALLED_APPS = BASE_APPS + THIRD_APPS + LOCAL_APPS 
 
+# ------------------------------------------
+# Middleware
+# ------------------------------------------
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -59,6 +65,9 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'core.urls'
 
+# ------------------------------------------
+# Templates
+# ------------------------------------------
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -77,7 +86,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
+# ------------------------------------------
 # Password validation
+# ------------------------------------------
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -93,29 +104,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Backend Auths (Django intenta el primero, si falla va al segundo)
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend', # Login normal por Admin
-    'allauth.account.auth_backends.AuthenticationBackend', # Login por Allauth
-)
-
-# allauth config mínima para custom user sin username
-ACCOUNT_USERMODEL_USERNAME_FIELD = None
-# Solo pedimos email en el signup,  obligatorio con el asterisco *
-ACCOUNT_SIGNUP_FIELDS = ['email*'] 
-ACCOUNT_LOGIN_METHODS = {'email'}
-AUTH_USER_MODEL = 'users.User'
-
-ACCOUNT_FORMS = {
-    "signup": "users.forms.CustomSignupForm",
-}
-
-
 # Configuración de Unfold
 # config/settings.py
-
-# config/settings.py
-
+# -----------------------------------------------------------------------------
+# UNFOLD ADMIN CONFIGURATION
+# -----------------------------------------------------------------------------
 UNFOLD = {
     "SITE_TITLE": "ERP Fenix Soft",
     "SITE_HEADER": "Dashboard",
@@ -123,6 +116,11 @@ UNFOLD = {
     "SHOW_HISTORY": True,
     "SHOW_VIEW_ON_SITE": False,
     # "THEME": "dark",
+    
+    # Aquí es donde Unfold detecta y carga el CSS compilado por tu comando npm
+    "STYLES": [
+        lambda request: static("css/styles.css"),
+    ],
     
     "SIDEBAR": {
         "show_search": True,
@@ -187,7 +185,36 @@ UNFOLD = {
     },
 }
 
-# Internationalization
+CRISPY_ALLOWED_TEMPLATE_PACKS = ["unfold_crispy"]
+CRISPY_TEMPLATE_PACK = "unfold_crispy"
+
+
+# -----------------------------------------------------------------------------
+# ALLAUTH CONFIGURATION
+# -----------------------------------------------------------------------------
+
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_SIGNUP_FIELDS = ['email*'] 
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_LOGIN_METHODS = {'email'}
+AUTH_USER_MODEL = 'users.User'
+
+# Backend Auths (Django intenta el primero, si falla va al segundo)
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend', # Login normal por Admin
+    'allauth.account.auth_backends.AuthenticationBackend', # Login por Allauth
+)
+
+# allauth config mínima para custom user sin username
+ACCOUNT_FORMS = {
+    "signup": "users.forms.CustomSignupForm",
+}
+
+# -----------------------------------------------------------------------------
+# INTERNATIONALIZATION
+# -----------------------------------------------------------------------------
+
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
@@ -195,5 +222,11 @@ USE_TZ = True
 
 SITE_ID = 1
 
+
+# ------------------------------------------
 # Static files (CSS, JavaScript, Images)
+# ------------------------------------------
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    BASE_DIR.parent / 'statics',
+]

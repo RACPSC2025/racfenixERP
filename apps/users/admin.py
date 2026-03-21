@@ -3,6 +3,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import Group
 from unfold.admin import ModelAdmin
 from unfold.forms import UserCreationForm, UserChangeForm, AdminPasswordChangeForm
+from unfold.decorators import display  # ← Importamos el decorador display de unfold para mejorar como se ven las columnas
 from .models import User
 
 # Desregistrar modelos por defecto para evitar conflictos
@@ -20,7 +21,9 @@ except admin.sites.NotRegistered:
 @admin.register(Group)
 class GroupAdmin(ModelAdmin):
     """Administración de grupos con Unfold"""
-    pass
+    # Habilitamos busqueda y lista para que la tabla de grupos tampoco se vea simple
+    list_display = ["name"]
+    search_fields = ["name"]
 
 
 @admin.register(User)
@@ -33,7 +36,8 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
     change_password_form = AdminPasswordChangeForm  # ← Nombre correcto
     
     # Vista de lista (SIN espacios en los strings)
-    list_display = ["email", "name", "lastname", "is_staff", "is_active"]
+    # Usamos nuestros nuevos métodos con decoradores en lugar de campos planos
+    list_display = ["email", "name", "lastname", "display_is_staff", "display_is_active"]
     list_filter = ["is_staff", "is_active"]
     search_fields = ["email", "name", "lastname"]
     ordering = ["email"]
@@ -63,3 +67,17 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
     # Configuración adicional
     filter_horizontal = ("groups", "user_permissions")
     readonly_fields = ["last_login"]
+
+    # --- Decoradores para mejorar el listado (Tabla) ---
+
+    # El decorador @display permite dar atributos visuales en la tabla (boolean=True dibuja checks y cruces verdes/rojas)
+    @display(description="Staff", boolean=True)
+    def display_is_staff(self, obj):
+        """Retorna el estado de staff y lo muestra como icono (check) gracias al decorador"""
+        return obj.is_staff
+
+    # El decorador con label={'texto': 'color'} convierte el texto devuelto en una etiqueta/badge (como la 2da foto)
+    @display(description="Status", label={"ACTIVE": "success", "INACTIVE": "danger"})
+    def display_is_active(self, obj):
+        """Si el usuario está activo devuelve "ACTIVE", sino "INACTIVE" y Unfold le asigna un color"""
+        return "ACTIVE" if obj.is_active else "INACTIVE"

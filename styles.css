@@ -1,2 +1,77 @@
 /* styles.css */
 @import 'tailwindcss';
+
+@theme {
+    /* Variables de tailwind... */
+}
+
+/* ¡Importante! En Tailwind v4, si pones colores en @theme pero tus templates están ocultos en una librería de Python (como Unfold), Tailwind elimina ("purga") esos colores creyendo que no se usan.
+   Para sobreescribir colores globalmente sin que Tailwind los elimine, los ponemos directamente en :root */
+
+/* =========================================
+   PALETA PRINCIPAL (MODO CLARO)
+   ========================================= */
+:root {
+    /* 1. COLOR PRIMARIO (Purple Moderno y Vibrante)
+       Inspirado en el morado de Unfold pero ajustado 
+       para tener más brillo y suavidad (tonos pastel en los bajos). */
+    --color-primary-50:  #f5f3ff; /* Pastel muy suave para fondos activos */
+    --color-primary-100: #ede9fe; /* Hover suave */
+    --color-primary-200: #ddd6fe;
+    --color-primary-300: #c4b5fd;
+    --color-primary-400: #a78bfa;
+    --color-primary-500: #8b5cf6; /* Morado vibrante moderno */
+    --color-primary-600: #7c3aed; /* Call to actions */
+    --color-primary-700: #6d28d9;
+    --color-primary-800: #5b21b6;
+    --color-primary-900: #4c1d95;
+    --color-primary-950: #2e1065;
+
+    /* 2. SUPERFICIES Y FONDOS
+       En lugar de grises planos, usamos tonos "Slate" (Gris-Azulado)
+       que dan un aspecto mucho más premium y limpio. */
+    --color-gray-50:  #f8fafc; /* Fondo general del panel (Body) - Gris muy puro casi blanco */
+    --color-gray-100: #f1f5f9; /* Fondos de áreas secundarias */
+    --color-gray-200: #e2e8f0; /* Líneas divisorias finas */
+    --color-gray-300: #cbd5e1; /* Bordes enfocados */
+    --color-gray-400: #94a3b8; /* Textos de soporte o iconos inactivos */
+    --color-gray-500: #64748b; /* Textos secundarios */
+    --color-gray-600: #475569; /* Iconos y descripciones medias */
+    --color-gray-700: #334155; /* Textos de lectura principal */
+    --color-gray-800: #1e293b; /* Títulos secundarios */
+    --color-gray-900: #0f172a; /* Títulos principales y énfasis alto */
+    --color-gray-950: #020617; 
+
+    /* Blanco puro para que las tarjetas de información resalten 
+       contra el fondo principal (gray-50) */
+    --color-white: #ffffff !important;
+}
+
+/* =========================================
+   PALETA MODO OSCURO (DARK MODE)
+   ========================================= 
+   Unfold añade la clase .dark al HTML cuando se activa el modo oscuro.
+   Sobrescribimos las variables de escala de grises para crear un oscuro profundo
+   y elegante sin usar colores "negros" al 100%, dándole un toque moderno.
+*/
+.dark {
+    /* Mantenemos el primario un toque más brillante si quieres, 
+       o simplemente dejamos que herede del :root */
+
+    /* Invertimos y ajustamos la escala Slate para el modo oscuro */
+    --color-gray-50:  #020617; /* Fondo general ultra profundo (casi negro tintado en azul) */
+    --color-gray-100: #0f172a; /* Fondo principal (Body) */
+    --color-gray-200: #1e293b; /* Fondos de Tarjetas / Superficies elevadas */
+    --color-gray-300: #334155; /* Bordes oscuros tenues */
+    --color-gray-400: #475569; /* Iconos en modo oscuro */
+    --color-gray-500: #64748b; /* Textos apagados */
+    --color-gray-600: #94a3b8; /* Textos secundarios legibles */
+    --color-gray-700: #cbd5e1; /* Descripciones claras */
+    --color-gray-800: #e2e8f0; /* Títulos de segundo nivel */
+    --color-gray-900: #f1f5f9; /* Títulos principales e iconos fuertes */
+    --color-gray-950: #f8fafc; /* Blanco máximo en modo oscuro */
+
+    /* Sobre-escribimos el "blanco" que Unfold asume para las tarjetas
+       y lo convertimos en un gris-azulado muy oscuro y elegante para mantener el confort visual */
+    --color-white: #1e293b !important;
+}
