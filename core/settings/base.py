@@ -124,12 +124,12 @@ UNFOLD = {
     "SHOW_HISTORY": True,
     "SHOW_VIEW_ON_SITE": False,
     # "THEME": "dark",
-    
+
     # Aquí es donde Unfold detecta y carga el CSS compilado por tu comando npm
     "STYLES": [
         lambda request: static("css/styles.css"),
     ],
-    
+
     "SIDEBAR": {
         "show_search": True,
         "show_all_applications": False,
@@ -143,6 +143,12 @@ UNFOLD = {
                         "icon": "person",
                         "link": "/admin/users/user/",
                         "permission": lambda request: request.user.has_perm("users.view_user"),
+                    },
+                    {
+                        "title": "Roles",
+                        "icon": "group",
+                        "link": "/admin/auth/group/",
+                        "permission": lambda request: request.user.has_perm("auth.view_group"),
                     },
                 ],
             },
