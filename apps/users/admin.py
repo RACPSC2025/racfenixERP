@@ -64,6 +64,15 @@ class GroupAdmin(ModelAdmin):
     """Administración de grupos con Unfold"""
     list_display = ["name"]
     search_fields = ["name"]
+    filter_horizontal = ("permissions",)
+    
+    fieldsets = (
+        (None, {"fields": ("name",)}),
+        ("Permissions", {
+            "fields": ("permissions",),
+            "classes": ("wide",),
+        }),
+    )
 
 
 # ─────────────────────────────────────────────────────────
@@ -229,3 +238,45 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
             '</div>',
             edit_url, delete_url, obj.email,
         )
+
+# ── SOCIAL ACCOUNTS (ALLAUTH) ──
+from allauth.socialaccount.models import SocialAccount, SocialApp, SocialToken
+try:
+    admin.site.unregister(SocialAccount)
+    admin.site.unregister(SocialApp)
+    admin.site.unregister(SocialToken)
+except admin.sites.NotRegistered:
+    pass
+
+@admin.register(SocialAccount)
+class SocialAccountAdmin(ModelAdmin):
+    list_display = ("user", "provider", "uid", "last_login")
+    list_filter = ("provider", "last_login")
+    search_fields = ("user__email", "uid")
+    fieldsets = (
+        (None, {"fields": ("user", "provider", "uid")}),
+        ("Extra Data", {"fields": ("extra_data",), "classes": ("collapse",)}),
+    )
+
+@admin.register(SocialApp)
+class SocialAppAdmin(ModelAdmin):
+    list_display = ("name", "provider", "client_id")
+    list_filter = ("provider",)
+    search_fields = ("name", "client_id")
+    filter_horizontal = ("sites",)
+    fieldsets = (
+        ("Application details", {"fields": ("provider", "name", "client_id", "secret", "key")}),
+        ("Sites", {"fields": ("sites",)}),
+    )
+
+@admin.register(SocialToken)
+class SocialTokenAdmin(ModelAdmin):
+    list_display = ("app", "account", "display_token", "expires_at")
+    list_filter = ("app", "expires_at")
+    fieldsets = (
+        (None, {"fields": ("app", "account")}),
+        ("Token information", {"fields": ("token", "token_secret", "expires_at")}),
+    )
+    @display(description="Token")
+    def display_token(self, obj):
+        return f"{obj.token[:20]}..." if obj.token else "-"

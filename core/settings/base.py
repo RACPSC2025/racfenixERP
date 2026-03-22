@@ -80,7 +80,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / 'templates',
+            BASE_DIR.parent / 'templates',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -130,10 +130,22 @@ UNFOLD = {
         lambda request: static("css/styles.css"),
     ],
 
+    "DASHBOARD_URL": "/admin/dashboard/",
     "SIDEBAR": {
         "show_search": True,
         "show_all_applications": False,
         "navigation": [
+            {
+                "title": "Principal",
+                "items": [
+                    {
+                        "title": "Dashboard",
+                        "icon": "dashboard",
+                        "link": "/admin/dashboard/",
+                        "permission": lambda request: request.user.is_staff,
+                    },
+                ],
+            },
             {
                 "title": "Users",
                 "collapsible": True,
@@ -192,18 +204,6 @@ UNFOLD = {
                         "icon": "vpn_key",
                         "link": "/admin/socialaccount/socialtoken/",
                         "permission": lambda request: request.user.has_perm("socialaccount.view_socialtoken"),
-                    },
-                ],
-            },
-            {
-                "title": "Authentication and Authorization",
-                "collapsible": True,
-                "items": [
-                    {
-                        "title": "Groups",
-                        "icon": "group",
-                        "link": "/admin/auth/group/",
-                        "permission": lambda request: request.user.has_perm("auth.view_group"),
                     },
                 ],
             },

@@ -437,3 +437,64 @@
     }
   }
 }
+
+/* Mejora de visibilidad para todos los inputs en el Dashboard */
+input[type="text"], 
+input[type="email"], 
+input[type="password"], 
+input[type="number"], 
+input[type="url"], 
+input[type="search"], 
+input[type="tel"],
+select, 
+textarea {
+    border: 1px solid var(--color-primary-400) !important;
+    border-radius: 6px !important;
+    transition: all 0.2s ease-in-out !important;
+    background-color: var(--color-white) !important;
+}
+
+input:focus, 
+select:focus, 
+textarea:focus {
+    border: 2px solid var(--color-primary-600) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 2px var(--color-primary-100) !important;
+}
+
+/* En modo oscuro, ajustar el color del borde para que contraste mejor */
+.dark input[type="text"], 
+.dark input[type="email"], 
+.dark input[type="password"], 
+.dark input[type="number"], 
+.dark input[type="url"], 
+.dark input[type="search"], 
+.dark select, 
+.dark textarea {
+    border-color: var(--color-gray-500) !important;
+}
+
+.dark input:focus, 
+.dark select:focus, 
+.dark textarea:focus {
+    border-color: var(--color-primary-400) !important;
+}
+
+/* Aumento de altura para los selectores de permisos (filter_horizontal) */
+.selector .selector-available select, 
+.selector .selector-chosen select {
+    min-height: 400px !important;
+    height: auto !important;
+}
+
+.selector .selector-available input, 
+.selector .selector-chosen input {
+    margin-bottom: 8px !important;
+}
+
+/* Ajustes para el contenedor de filtros en el admin de grupos */
+.form-row.field-permissions .selector {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+}
