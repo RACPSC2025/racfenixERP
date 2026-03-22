@@ -40,6 +40,7 @@ LOCAL_APPS=[
     'apps.products',
     'apps.purchases',
     'apps.sales',
+    'apps.customers',
 ]
 
 THIRD_APPS=[
@@ -113,8 +114,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Configuración de Unfold
-# config/settings.py
 # -----------------------------------------------------------------------------
 # UNFOLD ADMIN CONFIGURATION
 # -----------------------------------------------------------------------------
