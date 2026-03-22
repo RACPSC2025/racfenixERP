@@ -3,7 +3,6 @@ from django.urls import path, include
 from core.views import DashboardView
 
 urlpatterns = [
-    path('admin/dashboard/', DashboardView.as_view(), name='dashboard'),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('products/', include('apps.products.urls')),

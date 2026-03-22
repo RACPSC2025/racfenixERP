@@ -278,3 +278,69 @@
     background-color: rgba(248, 113, 113, 0.2);
     color: #fca5a5;
 }
+
+/* =========================================
+   CUSTOM ADMIN IMPROVEMENTS
+   ========================================= */
+
+/* 1. Visibilidad de Inputs */
+input[type="text"], 
+input[type="email"], 
+input[type="password"], 
+input[type="number"], 
+input[type="url"], 
+input[type="search"], 
+input[type="tel"],
+select, 
+textarea {
+    border: 1px solid var(--color-primary-400) !important;
+    border-radius: 6px !important;
+    transition: all 0.2s ease-in-out !important;
+    background-color: var(--color-white) !important;
+}
+
+input:focus, 
+select:focus, 
+textarea:focus {
+    border: 2px solid var(--color-primary-600) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 2px var(--color-primary-100) !important;
+}
+
+/* 2. Selectores de permisos más altos */
+.selector .selector-available select, 
+.selector .selector-chosen select {
+    min-height: 400px !important;
+    height: auto !important;
+}
+
+/* 3. Sistema de Badges Pastel (Consistentes) */
+.badge-pastel-green {
+    background-color: #d1fae5 !important;
+    color: #065f46 !important;
+}
+
+.badge-pastel-blue {
+    background-color: #dbeafe !important;
+    color: #1e40af !important;
+}
+
+.badge-pastel-red {
+    background-color: #fee2e2 !important;
+    color: #991b1b !important;
+}
+
+.dark .badge-pastel-green {
+    background-color: rgba(16, 185, 129, 0.15) !important;
+    color: #34d399 !important;
+}
+
+.dark .badge-pastel-blue {
+    background-color: rgba(59, 130, 246, 0.15) !important;
+    color: #60a5fa !important;
+}
+
+.dark .badge-pastel-red {
+    background-color: rgba(239, 68, 68, 0.15) !important;
+    color: #f87171 !important;
+}

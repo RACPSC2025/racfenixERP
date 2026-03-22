@@ -197,13 +197,25 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
         """Check/cross para indicar si es Superuser"""
         return obj.is_superuser
 
-    @display(
-        description="Status",
-        label={"ACTIVE": "success", "INACTIVE": "danger"},
-    )
+    @display(description="Status")
     def display_is_active(self, obj):
-        """Badge de estado: ACTIVE (verde) / INACTIVE (rojo)"""
-        return "ACTIVE" if obj.is_active else "INACTIVE"
+        """Badge de estado con relleno estilo pastel consistente"""
+        if obj.is_active:
+            badge_class = "badge-pastel-green"
+            label = "ACTIVO"
+            icon = "check_circle"
+        else:
+            badge_class = "badge-pastel-red"
+            label = "INACTIVO"
+            icon = "cancel"
+
+        return format_html(
+            '<div class="flex items-center justify-center gap-1.5 px-3 py-1 rounded-full font-bold text-[10px] min-w-[100px] border border-transparent {}">'
+            '  <span class="material-symbols-outlined" style="font-size:14px;">{}</span>'
+            '  <span class="tracking-widest uppercase">{}</span>'
+            '</div>',
+            badge_class, icon, label
+        )
 
     @display(description="Last Login", ordering="last_login")
     def display_last_login(self, obj):
@@ -280,3 +292,73 @@ class SocialTokenAdmin(ModelAdmin):
     @display(description="Token")
     def display_token(self, obj):
         return f"{obj.token[:20]}..." if obj.token else "-"
+
+
+# ─────────────────────────────────────────────────────────
+# HISTORIAL DE ACCIONES (LOG ENTRY)
+# ─────────────────────────────────────────────────────────
+from django.contrib.admin.models import LogEntry
+
+@admin.register(LogEntry)
+class LogEntryAdmin(ModelAdmin):
+    list_display = ("action_time_display", "user_display", "action_flag_display", "content_type_display", "object_repr_display")
+    list_filter = ("action_time", "action_flag", "content_type")
+    search_fields = ("object_repr", "change_message", "user__email")
+    readonly_fields = ("action_time", "user", "content_type", "object_id", "object_repr", "action_flag", "change_message")
+    list_per_page = 50
+
+    @display(description="Fecha y Hora", ordering="action_time")
+    def action_time_display(self, obj):
+        return format_html(
+            '<div class="flex items-center gap-2">'
+            '  <span class="material-symbols-outlined text-gray-400" style="font-size:16px;">schedule</span>'
+            '  <span class="font-medium text-gray-700 dark:text-gray-300">{}</span>'
+            '</div>',
+            obj.action_time.strftime("%d/%m/%Y %H:%M")
+        )
+
+    @display(description="Usuario", ordering="user")
+    def user_display(self, obj):
+        return format_html(
+            '<div class="flex items-center gap-2">'
+            '  <div class="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center">'
+            '    <span class="text-xs font-bold text-primary-600 dark:text-primary-400">{}</span>'
+            '  </div>'
+            '  <span class="font-semibold text-gray-900 dark:text-white">{}</span>'
+            '</div>',
+            obj.user.email[0].upper(),
+            obj.user.email.split('@')[0]
+        )
+
+    @display(description="Acción Realizada")
+    def action_flag_display(self, obj):
+        # Usamos clases personalizadas definidas en styles.css para evitar que Tailwind las elimine
+        styles = {
+            1: ("add_circle", "CREADO", "badge-pastel-green"),
+            2: ("edit_calendar", "EDITADO", "badge-pastel-blue"),
+            3: ("delete_forever", "ELIMINADO", "badge-pastel-red"),
+        }
+        
+        icon, label, badge_class = styles.get(obj.action_flag, ("help", "OTRO", "bg-gray-100 text-gray-700"))
+        
+        return format_html(
+            '<div class="flex items-center justify-center gap-2 px-3 py-1.5 rounded-lg font-bold text-[10px] min-w-[120px] {}">'
+            '  <span class="material-symbols-outlined" style="font-size:16px;">{}</span>'
+            '  <span class="tracking-widest uppercase">{}</span>'
+            '</div>',
+            badge_class, icon, label
+        )
+
+    @display(description="Modelo / Módulo")
+    def content_type_display(self, obj):
+        return format_html(
+            '<span class="px-2 py-1 rounded-md bg-gray-100 dark:bg-gray-800 text-xs font-mono text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700">{}</span>',
+            str(obj.content_type).upper()
+        )
+
+    @display(description="Objeto Afectado")
+    def object_repr_display(self, obj):
+        return format_html(
+            '<div class="max-w-xs truncate font-medium text-primary-600 dark:text-primary-400">{}</div>',
+            obj.object_repr
+        )

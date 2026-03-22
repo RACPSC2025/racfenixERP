@@ -1,0 +1,92 @@
+{% extends "unfold/layouts/base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+<div class="px-4 py-8 sm:px-6 lg:px-8">
+    <!-- Encabezado de Bienvenida -->
+    <div class="mb-8">
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Bienvenido al ERP Fenix Soft</h1>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Aquí tienes un resumen del estado actual de tu plataforma.</p>
+    </div>
+
+    <!-- Estadísticas Rápidas (Dashboard) -->
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <!-- Usuarios -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="flex items-center justify-between mb-4">
+                <div class="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+                    <span class="material-symbols-outlined text-blue-600 dark:text-blue-400">group</span>
+                </div>
+                <span class="text-xs font-medium text-green-600 bg-green-100 dark:bg-green-900/30 px-2 py-1 rounded">+12%</span>
+            </div>
+            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Usuarios Totales</h3>
+            <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">1,234</p>
+        </div>
+
+        <!-- Productos -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="flex items-center justify-between mb-4">
+                <div class="p-3 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg">
+                    <span class="material-symbols-outlined text-emerald-600 dark:text-emerald-400">inventory_2</span>
+                </div>
+                <span class="text-xs font-medium text-green-600 bg-green-100 dark:bg-green-900/30 px-2 py-1 rounded">+3%</span>
+            </div>
+            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Catálogo</h3>
+            <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">567</p>
+        </div>
+
+        <!-- Ventas -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="flex items-center justify-between mb-4">
+                <div class="p-3 bg-amber-100 dark:bg-amber-900/30 rounded-lg">
+                    <span class="material-symbols-outlined text-amber-600 dark:text-amber-400">payments</span>
+                </div>
+                <span class="text-xs font-medium text-red-600 bg-red-100 dark:bg-red-900/30 px-2 py-1 rounded">-1.5%</span>
+            </div>
+            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Ventas Hoy</h3>
+            <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">$4,120</p>
+        </div>
+
+        <!-- Alertas/Pedidos -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="flex items-center justify-between mb-4">
+                <div class="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
+                    <span class="material-symbols-outlined text-purple-600 dark:text-purple-400">shopping_cart</span>
+                </div>
+                <span class="text-xs font-medium text-blue-600 bg-blue-100 dark:bg-blue-900/30 px-2 py-1 rounded">8 Nuevos</span>
+            </div>
+            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Pedidos Pendientes</h3>
+            <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">24</p>
+        </div>
+    </div>
+
+    <!-- Sección de Acceso Rápido o Más Información -->
+    <div class="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Próximos pasos recomendados</h3>
+            <ul class="space-y-4">
+                <li class="flex items-center text-sm text-gray-600 dark:text-gray-300">
+                    <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                    Configurar proveedores de social auth.
+                </li>
+                <li class="flex items-center text-sm text-gray-600 dark:text-gray-300">
+                    <span class="w-2 h-2 bg-emerald-500 rounded-full mr-3"></span>
+                    Sincronizar inventario con el catálogo local.
+                </li>
+                <li class="flex items-center text-sm text-gray-600 dark:text-gray-300">
+                    <span class="w-2 h-2 bg-amber-500 rounded-full mr-3"></span>
+                    Revisar los registros de seguridad recientes.
+                </li>
+            </ul>
+        </div>
+        
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 flex flex-col items-center justify-center text-center">
+            <div class="bg-gray-100 dark:bg-gray-900 p-4 rounded-full mb-4">
+                <span class="material-symbols-outlined text-gray-400 text-4xl">rocket_launch</span>
+            </div>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Estaremos agregando más widgets e información en tiempo real próximamente.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -130,7 +130,7 @@ UNFOLD = {
         lambda request: static("css/styles.css"),
     ],
 
-    "DASHBOARD_URL": "/admin/dashboard/",
+    "DASHBOARD_URL": "/admin/",
     "SIDEBAR": {
         "show_search": True,
         "show_all_applications": False,
@@ -141,8 +141,14 @@ UNFOLD = {
                     {
                         "title": "Dashboard",
                         "icon": "dashboard",
-                        "link": "/admin/dashboard/",
+                        "link": "/admin/",
                         "permission": lambda request: request.user.is_staff,
+                    },
+                    {
+                        "title": "Historial",
+                        "icon": "history",
+                        "link": "/admin/admin/logentry/",
+                        "permission": lambda request: request.user.is_superuser,
                     },
                 ],
             },
