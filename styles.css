@@ -1,6 +1,9 @@
 /* styles.css */
 @import 'tailwindcss';
 
+/* Escanear archivos Python para detectar clases de Tailwind usadas en admin.py */
+@source "./apps/**/*.py";
+
 @theme {
     /* Variables de tailwind... */
 }
@@ -74,4 +77,204 @@
     /* Sobre-escribimos el "blanco" que Unfold asume para las tarjetas
        y lo convertimos en un gris-azulado muy oscuro y elegante para mantener el confort visual */
     --color-white: #1e293b !important;
+}
+
+
+/* =========================================
+   USER ADMIN — PREMIUM TABLE STYLES
+   =========================================
+   Estilos inspirados en Creative Tim / Material Dashboard
+   para la tabla de usuarios en el admin de Django.
+*/
+
+/* ── Avatar circular con gradiente ── */
+.user-avatar {
+    width: 2.625rem;
+    height: 2.625rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    text-transform: uppercase;
+}
+
+/* ── Nombre del usuario ── */
+.user-name {
+    font-weight: 600;
+    font-size: 0.875rem;
+    line-height: 1.25;
+    color: var(--color-gray-800);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 220px;
+}
+
+.dark .user-name {
+    color: var(--color-gray-900);
+}
+
+/* ── Email del usuario ── */
+.user-email {
+    font-size: 0.75rem;
+    line-height: 1.25;
+    color: var(--color-gray-500);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 220px;
+    margin-top: 1px;
+}
+
+.dark .user-email {
+    color: var(--color-gray-600);
+}
+
+/* ── Rol del usuario (línea 1) ── */
+.user-role {
+    font-weight: 600;
+    font-size: 0.875rem;
+    line-height: 1.25;
+    color: var(--color-gray-800);
+}
+
+.dark .user-role {
+    color: var(--color-gray-900);
+}
+
+/* ── Grupo del usuario (línea 2) ── */
+.user-group {
+    font-size: 0.75rem;
+    line-height: 1.25;
+    color: var(--color-gray-500);
+    margin-top: 1px;
+}
+
+.dark .user-group {
+    color: var(--color-gray-600);
+}
+
+/* ── Fecha (Last Login) ── */
+.user-date {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-gray-700);
+}
+
+.dark .user-date {
+    color: var(--color-gray-700);
+}
+
+.user-date--never {
+    font-style: italic;
+    color: var(--color-gray-400);
+}
+
+.dark .user-date--never {
+    color: var(--color-gray-500);
+}
+
+/* ── Mejoras generales a la tabla de Unfold ── */
+
+/* Filas más altas para acomodar avatar + texto apilado */
+#changelist table tbody td {
+    padding-top: 0.875rem !important;
+    padding-bottom: 0.875rem !important;
+    vertical-align: middle !important;
+}
+
+/* Hover suave en filas */
+#changelist table tbody tr:hover td {
+    background-color: var(--color-primary-50) !important;
+    transition: background-color 0.2s ease;
+}
+
+.dark #changelist table tbody tr:hover td {
+    background-color: rgba(139, 92, 246, 0.06) !important;
+}
+
+/* Bordes más suaves entre filas */
+#changelist table tbody td {
+    border-bottom: 1px solid var(--color-gray-200) !important;
+}
+
+/* Encabezados de columna más limpios */
+#changelist table thead th {
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    color: var(--color-gray-500) !important;
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+    border-bottom: 2px solid var(--color-gray-200) !important;
+}
+
+.dark #changelist table thead th {
+    color: var(--color-gray-600) !important;
+    border-bottom-color: var(--color-gray-300) !important;
+}
+
+/* ── Botones de Acción (Editar / Eliminar) ── */
+
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+    text-decoration: none !important;
+    cursor: pointer;
+}
+
+/* Botón Editar — Azul */
+.action-btn--edit {
+    color: #3b82f6;
+    background-color: rgba(59, 130, 246, 0.1);
+}
+
+.action-btn--edit:hover {
+    background-color: rgba(59, 130, 246, 0.2);
+    color: #2563eb;
+    transform: scale(1.1);
+}
+
+.dark .action-btn--edit {
+    color: #60a5fa;
+    background-color: rgba(96, 165, 250, 0.1);
+}
+
+.dark .action-btn--edit:hover {
+    background-color: rgba(96, 165, 250, 0.2);
+    color: #93bbfd;
+}
+
+/* Botón Eliminar — Rojo */
+.action-btn--delete {
+    color: #ef4444;
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+.action-btn--delete:hover {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #dc2626;
+    transform: scale(1.1);
+}
+
+.dark .action-btn--delete {
+    color: #f87171;
+    background-color: rgba(248, 113, 113, 0.1);
+}
+
+.dark .action-btn--delete:hover {
+    background-color: rgba(248, 113, 113, 0.2);
+    color: #fca5a5;
 }
