@@ -1,0 +1,3 @@
+# Logs de Django (Producción)
+# Este archivo mantiene la carpeta en el repositorio
+# Los archivos .log individuales están en .gitignore

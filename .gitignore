@@ -1,4 +1,18 @@
+# ===========================================
+# SECRETOS Y VARIABLES DE ENTORNO
+# ===========================================
+.env
+.env.local
+.env.production
+.env.*.local
+*.env
+
+# Permitir .env.example (plantilla segura)
+!.env.example
+
+# ===========================================
 # Python-generated files
+# ===========================================
 __pycache__/
 *.py[oc]
 build/
@@ -7,13 +21,39 @@ wheels/
 *.egg-info
 node_modules/
 
+# ===========================================
 # Virtual environments
+# ===========================================
 .venv
+venv/
+ENV/
+env/
 
-# Django stuff:
+# ===========================================
+# Django stuff
+# ===========================================
 *.log
 *.pot
 *.pyc
 __pycache__/
 db.sqlite3
 media/
+static/CACHE/
+
+# ===========================================
+# IDE
+# ===========================================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ===========================================
+# OS
+# ===========================================
+.DS_Store
+Thumbs.db
+
+# doc
+fenix_soft_erp.md

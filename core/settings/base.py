@@ -1,16 +1,21 @@
+import environ
 from pathlib import Path
 from django.templatetags.static import static
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-y8y9o@-l+b#lim8if$6$y9!v^-+z+#dr)%i@*hcws6iefex0jw'
+# Inicializar django-environ
+env = environ.Env()
+# Leer archivo .env según el entorno (local/production)
+environ.Env.read_env(BASE_DIR.parent / '.env.local')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+# -------------------------------------------
+# Django Core - Variables de Entorno
+# -------------------------------------------
+SECRET_KEY = env('SECRET_KEY')
+DEBUG = env.bool('DEBUG', default=False)
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
 
 # ------------------------------------------
 # Application definition
@@ -31,8 +36,10 @@ BASE_APPS = [
 
 LOCAL_APPS=[
     'core',
-    'apps.products',
     'apps.users',
+    'apps.products',
+    'apps.purchases',
+    'apps.sales',
 ]
 
 THIRD_APPS=[
@@ -71,7 +78,9 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR / 'templates',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -212,10 +221,9 @@ CRISPY_TEMPLATE_PACK = "unfold_crispy"
 # -----------------------------------------------------------------------------
 
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
-ACCOUNT_SIGNUP_FIELDS = ['email*'] 
-ACCOUNT_AUTHENTICATION_METHOD = "email"
-ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_SIGNUP_FIELDS = ['email*']
 ACCOUNT_LOGIN_METHODS = {'email'}
+ACCOUNT_EMAIL_VERIFICATION = env('ACCOUNT_EMAIL_VERIFICATION', default='none')
 AUTH_USER_MODEL = 'users.User'
 
 # Backend Auths (Django intenta el primero, si falla va al segundo)
@@ -238,7 +246,10 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-SITE_ID = 1
+# Site Framework
+SITE_ID = env.int('SITE_ID', default=1)
+SITE_NAME = env('SITE_NAME', default='ERP Fenix Soft')
+SITE_DOMAIN = env('SITE_DOMAIN', default='http://localhost:8000')
 
 
 # ------------------------------------------

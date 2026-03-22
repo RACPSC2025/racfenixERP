@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
-
 class SalesConfig(AppConfig):
-    name = 'sales'
+    name = 'apps.sales'
+    verbose_name = 'Ventas'
