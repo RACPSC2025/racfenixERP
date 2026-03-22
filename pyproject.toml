@@ -1,17 +1,34 @@
 [project]
 name = "erp-fenix-soft"
 version = "0.1.0"
-description = "Add your description here"
+description = "ERP empresarial moderno construido con Django 5.2 LTS"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "django>=6.0.3",
+    # Framework principal - LTS hasta Abril 2028
+    "django>=5.2,<5.3",
+    
+    # Autenticación y usuarios
     "django-allauth>=65.15.0",
+    
+    # Formularios
     "django-crispy-forms>=2.6",
+    
+    # Variables de entorno
     "django-environ>=0.13.0",
+    
+    # HTMX para interacciones asíncronas
     "django-htmx>=1.27.0",
+    
+    # Auditoría de cambios
     "django-simple-history>=3.11.0",
+    
+    # Admin panel moderno
     "django-unfold>=0.86.1",
+    
+    # API REST
     "djangorestframework>=3.17.0",
+    
+    # Driver PostgreSQL (producción)
     "psycopg2-binary>=2.9.11",
 ]
